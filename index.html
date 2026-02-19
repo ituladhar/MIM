@@ -16,6 +16,7 @@
             --text-secondary: rgba(255, 255, 255, 0.6);
             --accent-pink: #ec4899;
             --accent-purple: #a855f7;
+            --accent-cyan: #06b6d4;
             --input-bg: rgba(255, 255, 255, 0.05);
         }
 
@@ -65,13 +66,27 @@
             -webkit-text-fill-color: transparent;
         }
 
-        .opportunity-card {
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .tier-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .tier-card:hover {
+            transform: translateY(-5px);
         }
 
-        .opportunity-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
+        .tier-good { border-left: 4px solid var(--accent-cyan); background: linear-gradient(to right, rgba(6, 182, 212, 0.05), transparent); }
+        .tier-great { border-left: 4px solid var(--accent-pink); background: linear-gradient(to right, rgba(236, 72, 153, 0.1), transparent); }
+        .tier-elite { 
+            border-left: 4px solid var(--accent-purple); 
+            background: linear-gradient(to right, rgba(168, 85, 247, 0.15), transparent);
+            animation: elite-pulse 3s infinite ease-in-out;
+        }
+
+        @keyframes elite-pulse {
+            0%, 100% { box-shadow: 0 0 0px rgba(168, 85, 247, 0); }
+            50% { box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
         }
 
         .tooltip-custom {
@@ -261,43 +276,47 @@
                 </div>
 
                 <!-- Scenario Analysis -->
-                <div class="space-y-2">
+                <div class="space-y-3">
                     <div class="flex items-center justify-between px-1">
-                        <h3 class="text-xs md:text-xl font-bold">Growth Targets</h3>
-                        <span class="text-[8px] md:text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">Benchmarks</span>
+                        <h3 class="text-sm md:text-xl font-black italic uppercase tracking-tighter text-white/80">Profit Ladder</h3>
+                        <span class="text-[8px] md:text-xs bg-white/10 text-white/40 px-2 py-0.5 rounded-full font-bold uppercase">Growth Milestones</span>
                     </div>
-                    <div class="grid grid-cols-3 gap-2 md:gap-4">
-                        <div class="glass p-2 md:p-5 rounded-xl border border-white/5 opportunity-card text-center sm:text-left">
-                            <div class="mb-1">
-                                <span class="text-[8px] md:text-xs font-bold px-1.5 py-0.5 bg-white/10 rounded">Good</span>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4">
+                        <div class="glass p-3 md:p-5 rounded-xl tier-card tier-good">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-[9px] md:text-xs font-black uppercase text-cyan-400">Baseline</span>
+                                <span class="text-[9px] md:text-xs font-bold opacity-40">10% Conv.</span>
                             </div>
-                            <p id="opp10" class="text-[10px] sm:text-base md:text-2xl font-bold">$0</p>
-                            <p class="text-[7px] md:text-[10px] opacity-40 mt-0.5">10% Target</p>
+                            <p id="opp10" class="text-xl md:text-3xl font-bold tracking-tight text-cyan-50"> $0 </p>
+                            <p class="text-[8px] md:text-[10px] font-medium opacity-50 mt-1 uppercase tracking-wider">Starting Strength</p>
                         </div>
-                        <div class="glass p-2 md:p-5 rounded-xl border border-pink-500/20 opportunity-card text-center sm:text-left">
-                            <div class="mb-1">
-                                <span class="text-[8px] md:text-xs font-bold px-1.5 py-0.5 bg-pink-500/20 text-pink-400 rounded">Great</span>
+                        <div class="glass p-3 md:p-5 rounded-xl tier-card tier-great">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-[9px] md:text-xs font-black uppercase text-pink-400">High Velocity</span>
+                                <span class="text-[9px] md:text-xs font-bold opacity-40">15% Conv.</span>
                             </div>
-                            <p id="opp15" class="text-[10px] sm:text-base md:text-2xl font-bold">$0</p>
-                            <p class="text-[7px] md:text-[10px] opacity-40 mt-0.5">15% Target</p>
+                            <p id="opp15" class="text-xl md:text-3xl font-bold tracking-tight text-pink-50"> $0 </p>
+                            <p class="text-[8px] md:text-[10px] font-medium opacity-50 mt-1 uppercase tracking-wider">Top Tier Performance</p>
                         </div>
-                        <div class="glass p-2 md:p-5 rounded-xl border border-purple-500/20 opportunity-card text-center sm:text-left">
-                            <div class="mb-1">
-                                <span class="text-[8px] md:text-xs font-bold px-1.5 py-0.5 bg-purple-500/20 text-purple-400 rounded">Elite</span>
+                        <div class="glass p-3 md:p-5 rounded-xl tier-card tier-elite">
+                            <div class="flex justify-between items-start mb-2">
+                                <span class="text-[9px] md:text-xs font-black uppercase text-purple-400">Market Leader</span>
+                                <span class="text-[9px] md:text-xs font-bold opacity-40">20% Conv.</span>
                             </div>
-                            <p id="opp20" class="text-[10px] sm:text-base md:text-2xl font-bold">$0</p>
-                            <p class="text-[7px] md:text-[10px] opacity-40 mt-0.5">20% Target</p>
+                            <p id="opp20" class="text-xl md:text-3xl font-bold tracking-tight text-purple-50"> $0 </p>
+                            <p class="text-[8px] md:text-[10px] font-medium opacity-50 mt-1 uppercase tracking-wider">Maximum Revenue Cap</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Footer -->
-                <footer class="glass p-3 md:p-6 rounded-xl space-y-2">
-                    <div class="space-y-1.5 text-[8px] md:text-[11px] opacity-70 leading-tight">
-                        <p>💡 <strong>Comp Logic:</strong> <span id="logicMultiplier">300</span>% MRC upfront + $20 spiff ($10 dealer share) + 3% residual (23 mo). Upfront subject to 120-day chargeback. Residuals have NO chargeback.</p>
+                <footer class="glass p-3 md:p-6 rounded-xl space-y-3">
+                    <div class="space-y-2 text-[9px] md:text-[11px] opacity-70 leading-relaxed">
+                        <p>💡 <strong>How it works:</strong> <span id="logicMultiplier">300</span>% of MRC upfront + $20 spiff (50% to dealer = $10) + 3% monthly residual for up to 23 months. All upfront payments subject to 120-day chargeback. Residuals have NO chargeback.</p>
+                        <p><strong>Insider Deals:</strong> MRC is calculated at a 50% discount for all compensation payouts when an Insider code is applied.</p>
                         <p>⚠️ <strong>Disclaimer:</strong> Estimate only. Actual earnings vary and are subject to audit, official plans, and policy changes. No guarantee of income.</p>
                     </div>
-                    <div class="pt-1.5 border-t border-white/10 flex flex-row justify-between gap-2 text-[7px] md:text-[10px] font-bold uppercase tracking-widest opacity-40">
+                    <div class="pt-2 border-t border-white/10 flex flex-row justify-between gap-2 text-[7px] md:text-[10px] font-bold uppercase tracking-widest opacity-40">
                         <span>Smartphone Equality Only</span>
                         <span>Designed by Ishwor Tuladhar</span>
                     </div>
