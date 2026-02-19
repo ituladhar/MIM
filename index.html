@@ -2,7 +2,7 @@
 <html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Magenta Multiplier Pro | Dealer Comp</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -36,6 +36,7 @@
             color: var(--text-primary);
             transition: all 0.3s ease;
             min-height: 100vh;
+            overflow-x: hidden;
         }
 
         .glass {
@@ -69,17 +70,17 @@
         }
 
         .opportunity-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(236, 72, 153, 0.2);
         }
 
         .tooltip-custom {
             position: fixed;
             z-index: 100;
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            max-width: 250px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            max-width: 200px;
             pointer-events: none;
             opacity: 0;
             transition: opacity 0.2s;
@@ -97,8 +98,8 @@
         .switch {
             position: relative;
             display: inline-block;
-            width: 40px;
-            height: 20px;
+            width: 32px;
+            height: 16px;
         }
 
         .switch input { opacity: 0; width: 0; height: 0; }
@@ -115,7 +116,7 @@
         .slider:before {
             position: absolute;
             content: "";
-            height: 14px; width: 14px;
+            height: 10px; width: 10px;
             left: 3px; bottom: 3px;
             background-color: white;
             transition: .4s;
@@ -123,182 +124,181 @@
         }
 
         input:checked + .slider { background-color: var(--accent-pink); }
-        input:checked + .slider:before { transform: translateX(20px); }
+        input:checked + .slider:before { transform: translateX(16px); }
+
+        @media (max-width: 640px) {
+            .mobile-compact-padding { padding: 0.75rem !important; }
+            .mobile-label { font-size: 0.65rem !important; }
+        }
     </style>
 </head>
-<body class="p-4 md:p-8">
+<body class="p-2 md:p-8 flex items-center justify-center">
 
     <div id="tooltip" class="tooltip-custom"></div>
 
-    <div class="max-w-6xl mx-auto">
+    <div class="w-full max-w-6xl">
         <!-- Header -->
-        <header class="flex flex-col md:flex-row justify-between items-center mb-10 gap-4">
-            <div>
-                <h1 class="text-3xl font-extrabold text-gradient">Magenta Multiplier Pro</h1>
-                <p class="text-sm opacity-60">Dealer Revenue Modeling Hub</p>
+        <header class="flex flex-row justify-between items-center mb-3 md:mb-8 gap-2">
+            <div class="flex-1">
+                <h1 class="text-xl md:text-3xl font-extrabold text-gradient leading-tight">Magenta Multiplier Pro</h1>
+                <p class="text-[10px] md:text-sm opacity-60">Dealer Revenue Modeling Hub</p>
             </div>
             
-            <div class="flex items-center gap-4">
-                <button id="themeToggle" class="glass p-3 rounded-full hover:scale-110 transition-transform">
-                    <span id="themeIcon">🌙</span>
-                </button>
-            </div>
+            <button id="themeToggle" class="glass p-2 md:p-3 rounded-full hover:scale-110 transition-transform flex-shrink-0">
+                <span id="themeIcon" class="text-sm md:text-base">🌙</span>
+            </button>
         </header>
 
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-3 lg:gap-6">
             
             <!-- Left Panel: Inputs -->
-            <aside class="lg:col-span-4 space-y-6">
-                <div class="glass p-6 rounded-2xl space-y-6">
-                    <h2 class="text-lg font-bold border-b border-white/10 pb-2">Dealer Inputs</h2>
+            <aside class="lg:col-span-4 space-y-3">
+                <div class="glass mobile-compact-padding p-5 rounded-xl md:rounded-2xl space-y-3">
+                    <h2 class="text-sm md:text-lg font-bold border-b border-white/10 pb-1">Dealer Inputs</h2>
                     
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="space-y-1">
-                            <label class="text-xs uppercase opacity-60 font-bold">Cycle Start</label>
-                            <input type="date" id="dateFrom" value="2026-02-01" class="w-full p-2 rounded-lg input-style text-sm">
+                    <div class="grid grid-cols-2 gap-2">
+                        <div class="space-y-0.5">
+                            <label class="mobile-label text-[9px] uppercase opacity-60 font-bold">Start</label>
+                            <input type="date" id="dateFrom" value="2026-02-01" class="w-full p-1.5 rounded-lg input-style text-[10px] md:text-sm">
                         </div>
-                        <div class="space-y-1">
-                            <label class="text-xs uppercase opacity-60 font-bold">Cycle End</label>
-                            <input type="date" id="dateTo" value="2026-02-28" class="w-full p-2 rounded-lg input-style text-sm">
-                        </div>
-                    </div>
-
-                    <div class="space-y-1">
-                        <label class="text-xs uppercase opacity-60 font-bold flex justify-between">
-                            MIM Eligibility 
-                            <span class="text-[10px] bg-pink-500/20 text-pink-400 px-2 py-0.5 rounded">Activations</span>
-                        </label>
-                        <input type="number" id="totalMimEligibility" value="80" class="w-full p-3 rounded-lg input-style font-mono">
-                    </div>
-
-                    <div class="space-y-1">
-                        <label class="text-xs uppercase opacity-60 font-bold cursor-help" data-tip="Average lines per account during migration (Standard is 2.3).">
-                            Line Factor ⓘ
-                        </label>
-                        <input type="number" id="linesPerBan" value="2.3" step="0.1" class="w-full p-3 rounded-lg input-style font-mono">
-                    </div>
-
-                    <div class="space-y-1">
-                        <label class="text-xs uppercase opacity-60 font-bold cursor-help" data-tip="Current store conversion performance percentage.">
-                            Conversion % ⓘ
-                        </label>
-                        <div class="relative">
-                            <input type="number" id="mimConversionRate" value="4" step="0.01" class="w-full p-3 rounded-lg input-style font-mono">
-                            <span class="absolute right-4 top-3 opacity-40">%</span>
+                        <div class="space-y-0.5">
+                            <label class="mobile-label text-[9px] uppercase opacity-60 font-bold">End</label>
+                            <input type="date" id="dateTo" value="2026-02-28" class="w-full p-1.5 rounded-lg input-style text-[10px] md:text-sm">
                         </div>
                     </div>
 
-                    <h2 class="text-lg font-bold border-b border-white/10 pb-2 pt-4">Calculation Logic</h2>
+                    <div class="grid grid-cols-2 lg:grid-cols-1 gap-2">
+                        <div class="space-y-0.5">
+                            <label class="mobile-label text-[9px] uppercase opacity-60 font-bold flex justify-between">
+                                MIM Elig.
+                                <span class="text-[8px] bg-pink-500/20 text-pink-400 px-1 rounded">Act</span>
+                            </label>
+                            <input type="number" id="totalMimEligibility" value="80" class="w-full p-2 rounded-lg input-style font-mono text-xs md:text-sm">
+                        </div>
 
-                    <div class="space-y-1">
-                        <label class="text-xs uppercase opacity-60 font-bold flex justify-between items-center">
-                            Rate Plan Value (MRC)
-                            <div class="flex items-center gap-2">
-                                <span class="text-[10px] opacity-60">Insider Deal?</span>
-                                <label class="switch">
-                                    <input type="checkbox" id="isInsider">
-                                    <span class="slider"></span>
-                                </label>
+                        <div class="space-y-0.5">
+                            <label class="mobile-label text-[9px] uppercase opacity-60 font-bold cursor-help" data-tip="Average lines per account (Standard: 2.3).">
+                                Line Factor ⓘ
+                            </label>
+                            <input type="number" id="linesPerBan" value="2.3" step="0.1" class="w-full p-2 rounded-lg input-style font-mono text-xs md:text-sm">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 lg:grid-cols-1 gap-2">
+                        <div class="space-y-0.5">
+                            <label class="mobile-label text-[9px] uppercase opacity-60 font-bold cursor-help" data-tip="Current store conversion performance.">
+                                Conv. % ⓘ
+                            </label>
+                            <div class="relative">
+                                <input type="number" id="mimConversionRate" value="4" step="0.01" class="w-full p-2 pr-6 rounded-lg input-style font-mono text-xs md:text-sm">
+                                <span class="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 text-[10px]">%</span>
                             </div>
-                        </label>
-                        <div class="relative">
-                            <span class="absolute left-4 top-3 text-pink-500 font-bold">$</span>
-                            <input type="number" id="ratePlanValue" value="47" class="w-full p-3 pl-8 rounded-lg input-style font-mono">
                         </div>
-                        <p id="insiderNote" class="text-[10px] text-pink-400 font-bold hidden">Logic: 50% MRC discount applied for Insider Deals</p>
+
+                        <div class="space-y-0.5">
+                            <label class="mobile-label text-[9px] uppercase opacity-60 font-bold flex justify-between items-center">
+                                MRC Value
+                                <div class="flex items-center gap-1">
+                                    <span class="text-[8px] opacity-60">Insider?</span>
+                                    <label class="switch">
+                                        <input type="checkbox" id="isInsider">
+                                        <span class="slider"></span>
+                                    </label>
+                                </div>
+                            </label>
+                            <div class="relative">
+                                <span class="absolute left-3 top-1/2 -translate-y-1/2 text-pink-500 font-bold text-xs pointer-events-none">$</span>
+                                <input type="number" id="ratePlanValue" value="47" class="w-full py-2 pl-7 pr-2 rounded-lg input-style font-mono text-xs md:text-sm">
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="space-y-1">
-                        <label class="text-xs uppercase opacity-60 font-bold">Standard Dealer Comp (300%)</label>
+                    <div class="space-y-0.5 pt-1">
+                        <label class="mobile-label text-[9px] uppercase opacity-60 font-bold">Standard Dealer Comp</label>
                         <div class="relative">
-                            <input type="number" id="dealerCompensationMultiplier" value="300" class="w-full p-3 rounded-lg input-style font-mono" disabled>
-                            <span class="absolute right-4 top-3 opacity-40">%</span>
+                            <input type="number" id="dealerCompensationMultiplier" value="300" class="w-full p-2 pr-6 rounded-lg input-style font-mono text-xs md:text-sm">
+                            <span class="absolute right-2 top-1/2 -translate-y-1/2 opacity-40 text-[10px]">%</span>
                         </div>
                     </div>
+                    
+                    <p id="insiderNote" class="text-[8px] text-pink-400 font-bold hidden text-center italic">Logic: 50% MRC discount applied for Insider Deals</p>
                 </div>
             </aside>
 
             <!-- Right Panel: Results -->
-            <main class="lg:col-span-8 space-y-8">
+            <main class="lg:col-span-8 space-y-3 md:space-y-6">
                 
                 <!-- Main KPI -->
-                <div class="glass p-8 rounded-3xl relative overflow-hidden group">
-                    <div class="absolute top-0 right-0 w-64 h-64 bg-pink-500/10 blur-[100px] rounded-full -mr-20 -mt-20"></div>
-                    <p class="text-sm font-bold uppercase tracking-widest opacity-60 mb-2">Estimated Yield Across Lifecycle</p>
+                <div class="glass p-4 md:p-8 rounded-xl md:rounded-3xl relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-32 h-32 md:w-64 md:h-64 bg-pink-500/10 blur-[40px] md:blur-[100px] rounded-full -mr-10 -mt-10 md:-mr-20 md:-mt-20"></div>
+                    <p class="text-[9px] md:text-sm font-bold uppercase tracking-widest opacity-60 mb-0.5 md:mb-2">Total Lifecycle Yield</p>
                     <div class="flex items-baseline gap-2">
-                        <h2 id="totalCompensation" class="text-6xl md:text-7xl font-extrabold text-gradient tracking-tight">$0.00</h2>
+                        <h2 id="totalCompensation" class="text-3xl md:text-7xl font-extrabold text-gradient tracking-tight">$0.00</h2>
                     </div>
-                    <p class="text-sm mt-4 opacity-40">Combined Upfront Earnings & 23-Month Residual Potential</p>
+                    <p class="text-[8px] md:text-sm mt-1 opacity-40">Upfront Earnings + 23-Month Residual Potential</p>
                 </div>
 
                 <!-- Metrics Grid -->
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <div class="glass p-5 rounded-2xl">
-                        <p class="text-[10px] uppercase font-bold opacity-50 mb-1">Accounts</p>
-                        <p id="numBans" class="text-2xl font-bold">0</p>
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 md:gap-4">
+                    <div class="glass p-3 md:p-5 rounded-xl">
+                        <p class="text-[8px] md:text-[10px] uppercase font-bold opacity-50 mb-0.5">Accounts</p>
+                        <p id="numBans" class="text-lg md:text-2xl font-bold">0</p>
                     </div>
-                    <div class="glass p-5 rounded-2xl">
-                        <p class="text-[10px] uppercase font-bold opacity-50 mb-1">Activations</p>
-                        <p id="numLines" class="text-2xl font-bold">0</p>
+                    <div class="glass p-3 md:p-5 rounded-xl">
+                        <p class="text-[8px] md:text-[10px] uppercase font-bold opacity-50 mb-0.5">Activations</p>
+                        <p id="numLines" class="text-lg md:text-2xl font-bold">0</p>
                     </div>
-                    <div class="glass p-5 rounded-2xl">
-                        <p class="text-[10px] uppercase font-bold opacity-50 mb-1">Upfront Comp</p>
-                        <p id="activationComp" class="text-2xl font-bold">$0.00</p>
-                        <p class="text-[9px] opacity-40 mt-1">300% SPIFF + $20 Flat</p>
+                    <div class="glass p-3 md:p-5 rounded-xl">
+                        <p class="text-[8px] md:text-[10px] uppercase font-bold opacity-50 mb-0.5">Upfront</p>
+                        <p id="activationComp" class="text-lg md:text-2xl font-bold">$0.00</p>
+                        <p class="text-[8px] md:text-[9px] opacity-40 mt-0.5 md:mt-1"><span id="upfrontSubMult">300</span>% SPIFF + $20 Flat</p>
                     </div>
-                    <div class="glass p-5 rounded-2xl">
-                        <p class="text-[10px] uppercase font-bold opacity-50 mb-1">Residual</p>
-                        <p id="residualAmount" class="text-2xl font-bold">$0.00</p>
-                        <p class="text-[9px] opacity-40 mt-1">Projected over 23 mo.</p>
+                    <div class="glass p-3 md:p-5 rounded-xl">
+                        <p class="text-[8px] md:text-[10px] uppercase font-bold opacity-50 mb-0.5">Residual</p>
+                        <p id="residualAmount" class="text-lg md:text-2xl font-bold">$0.00</p>
+                        <p class="text-[8px] md:text-[9px] opacity-40 mt-0.5 md:mt-1">Projected over 23 mo.</p>
                     </div>
                 </div>
 
                 <!-- Scenario Analysis -->
-                <div class="space-y-4">
-                    <div class="flex items-center justify-between">
-                        <h3 class="text-xl font-bold">Growth Targets</h3>
-                        <span class="text-xs bg-green-500/20 text-green-400 px-3 py-1 rounded-full font-bold">Benchmarks</span>
+                <div class="space-y-2">
+                    <div class="flex items-center justify-between px-1">
+                        <h3 class="text-xs md:text-xl font-bold">Growth Targets</h3>
+                        <span class="text-[8px] md:text-xs bg-green-500/20 text-green-400 px-2 py-0.5 rounded-full font-bold">Benchmarks</span>
                     </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                        <!-- 10% Scenario -->
-                        <div class="glass p-6 rounded-2xl border border-white/5 bg-gradient-to-br from-white/[0.02] to-transparent opportunity-card">
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="text-xs font-bold px-2 py-1 bg-white/10 rounded">Good</span>
-                                <span class="text-xs opacity-60">10% Conv.</span>
+                    <div class="grid grid-cols-3 gap-2 md:gap-4">
+                        <div class="glass p-2 md:p-5 rounded-xl border border-white/5 opportunity-card text-center sm:text-left">
+                            <div class="mb-1">
+                                <span class="text-[8px] md:text-xs font-bold px-1.5 py-0.5 bg-white/10 rounded">Good</span>
                             </div>
-                            <p id="opp10" class="text-3xl font-bold">$0.00</p>
-                            <p class="text-[10px] opacity-40 mt-2">Target Store Average</p>
+                            <p id="opp10" class="text-[10px] sm:text-base md:text-2xl font-bold">$0</p>
+                            <p class="text-[7px] md:text-[10px] opacity-40 mt-0.5">10% Target</p>
                         </div>
-                        <!-- 15% Scenario -->
-                        <div class="glass p-6 rounded-2xl border border-pink-500/20 bg-gradient-to-br from-pink-500/5 to-transparent opportunity-card">
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="text-xs font-bold px-2 py-1 bg-pink-500/20 text-pink-400 rounded">Great</span>
-                                <span class="text-xs opacity-60">15% Conv.</span>
+                        <div class="glass p-2 md:p-5 rounded-xl border border-pink-500/20 opportunity-card text-center sm:text-left">
+                            <div class="mb-1">
+                                <span class="text-[8px] md:text-xs font-bold px-1.5 py-0.5 bg-pink-500/20 text-pink-400 rounded">Great</span>
                             </div>
-                            <p id="opp15" class="text-3xl font-bold">$0.00</p>
-                            <p class="text-[10px] opacity-40 mt-2">High Performance Tier</p>
+                            <p id="opp15" class="text-[10px] sm:text-base md:text-2xl font-bold">$0</p>
+                            <p class="text-[7px] md:text-[10px] opacity-40 mt-0.5">15% Target</p>
                         </div>
-                        <!-- 20% Scenario -->
-                        <div class="glass p-6 rounded-2xl border border-purple-500/20 bg-gradient-to-br from-purple-500/5 to-transparent opportunity-card">
-                            <div class="flex justify-between items-start mb-4">
-                                <span class="text-xs font-bold px-2 py-1 bg-purple-500/20 text-purple-400 rounded">Elite</span>
-                                <span class="text-xs opacity-60">20% Conv.</span>
+                        <div class="glass p-2 md:p-5 rounded-xl border border-purple-500/20 opportunity-card text-center sm:text-left">
+                            <div class="mb-1">
+                                <span class="text-[8px] md:text-xs font-bold px-1.5 py-0.5 bg-purple-500/20 text-purple-400 rounded">Elite</span>
                             </div>
-                            <p id="opp20" class="text-3xl font-bold">$0.00</p>
-                            <p class="text-[10px] opacity-40 mt-2">Market Benchmark</p>
+                            <p id="opp20" class="text-[10px] sm:text-base md:text-2xl font-bold">$0</p>
+                            <p class="text-[7px] md:text-[10px] opacity-40 mt-0.5">20% Target</p>
                         </div>
                     </div>
                 </div>
 
                 <!-- Footer -->
-                <footer class="glass p-6 rounded-2xl space-y-4">
-                    <div class="space-y-3 text-[11px] opacity-70 leading-relaxed">
-                        <p>💡 <strong>How it works:</strong> 300% of MRC upfront + $20 spiff (50% to dealer = $10) + 3% monthly residual for up to 23 months. All upfront payments subject to 120-day chargeback. Residuals have NO chargeback.</p>
-                        <p><strong>Insider Deals:</strong> MRC is calculated at a 50% discount for all compensation payouts when an Insider code is applied.</p>
-                        <p>⚠️ This calculator provides an <strong>estimate</strong> of potential compensation based on the inputs provided and historical compensation factors. <strong>Actual earnings may vary</strong> and are subject to final audit, official compensation plans, and policy changes. This tool is for informational and planning purposes only and does not constitute a guarantee of income.</p>
+                <footer class="glass p-3 md:p-6 rounded-xl space-y-2">
+                    <div class="space-y-1.5 text-[8px] md:text-[11px] opacity-70 leading-tight">
+                        <p>💡 <strong>Comp Logic:</strong> <span id="logicMultiplier">300</span>% MRC upfront + $20 spiff ($10 dealer share) + 3% residual (23 mo). Upfront subject to 120-day chargeback. Residuals have NO chargeback.</p>
+                        <p>⚠️ <strong>Disclaimer:</strong> Estimate only. Actual earnings vary and are subject to audit, official plans, and policy changes. No guarantee of income.</p>
                     </div>
-                    <div class="pt-4 border-t border-white/10 flex flex-col md:flex-row justify-between gap-2 text-[10px] font-bold uppercase tracking-widest opacity-40">
-                        <span>Smartphone Equality Eligible Only</span>
+                    <div class="pt-1.5 border-t border-white/10 flex flex-row justify-between gap-2 text-[7px] md:text-[10px] font-bold uppercase tracking-widest opacity-40">
+                        <span>Smartphone Equality Only</span>
                         <span>Designed by Ishwor Tuladhar</span>
                     </div>
                 </footer>
@@ -307,35 +307,29 @@
     </div>
 
     <script>
-        // Configuration
-        const RESIDUAL_FACTOR = 23 * 0.03; 
-
-        const state = {
-            theme: localStorage.getItem('theme') || 'dark'
-        };
+        const state = { theme: localStorage.getItem('theme') || 'dark' };
 
         const els = {
             totalMimEligibility: document.getElementById('totalMimEligibility'),
             linesPerBan: document.getElementById('linesPerBan'),
             mimConversionRate: document.getElementById('mimConversionRate'),
             ratePlanValue: document.getElementById('ratePlanValue'),
+            dealerCompensationMultiplier: document.getElementById('dealerCompensationMultiplier'),
             isInsider: document.getElementById('isInsider'),
             insiderNote: document.getElementById('insiderNote'),
-            
+            logicMultiplier: document.getElementById('logicMultiplier'),
+            upfrontSubMult: document.getElementById('upfrontSubMult'),
             totalCompensation: document.getElementById('totalCompensation'),
             numBans: document.getElementById('numBans'),
             numLines: document.getElementById('numLines'),
             activationComp: document.getElementById('activationComp'),
             residualAmount: document.getElementById('residualAmount'),
-            
             opp10: document.getElementById('opp10'),
             opp15: document.getElementById('opp15'),
             opp20: document.getElementById('opp20'),
-
             themeToggle: document.getElementById('themeToggle'),
             themeIcon: document.getElementById('themeIcon'),
-            tooltip: document.getElementById('tooltip'),
-            dateFrom: document.getElementById('dateFrom')
+            tooltip: document.getElementById('tooltip')
         };
 
         function applyTheme(theme) {
@@ -351,22 +345,26 @@
         });
 
         document.querySelectorAll('[data-tip]').forEach(el => {
-            el.addEventListener('mousemove', (e) => {
+            const showTooltip = (e) => {
+                if (window.innerWidth < 768) return;
                 els.tooltip.textContent = el.getAttribute('data-tip');
                 els.tooltip.style.opacity = '1';
-                els.tooltip.style.left = (e.clientX + 15) + 'px';
-                els.tooltip.style.top = (e.clientY + 15) + 'px';
-            });
-            el.addEventListener('mouseleave', () => {
-                els.tooltip.style.opacity = '0';
-            });
+                els.tooltip.style.left = (e.clientX + 10) + 'px';
+                els.tooltip.style.top = (e.clientY + 10) + 'px';
+            };
+            el.addEventListener('mousemove', showTooltip);
+            el.addEventListener('mouseenter', showTooltip);
+            el.addEventListener('mouseleave', () => els.tooltip.style.opacity = '0');
         });
 
         function formatCurrency(val) {
+            const isMobile = window.innerWidth < 640;
+            const absVal = Math.abs(val);
             return new Intl.NumberFormat('en-US', {
                 style: 'currency',
                 currency: 'USD',
-                minimumFractionDigits: 2
+                minimumFractionDigits: (isMobile || absVal >= 1000) ? 0 : 2,
+                maximumFractionDigits: (isMobile || absVal >= 1000) ? 0 : 2
             }).format(val);
         }
 
@@ -374,6 +372,7 @@
             const eligibility = parseFloat(els.totalMimEligibility.value) || 0;
             const linesPerBan = parseFloat(els.linesPerBan.value) || 0;
             let mrc = parseFloat(els.ratePlanValue.value) || 0;
+            const dealerMult = (parseFloat(els.dealerCompensationMultiplier.value) || 0) / 100;
             
             if (els.isInsider.checked) {
                 mrc = mrc * 0.5;
@@ -383,46 +382,35 @@
             }
 
             const convRate = convRateOverride !== null ? convRateOverride : (parseFloat(els.mimConversionRate.value) || 0) / 100;
-
             const bans = eligibility * convRate;
             const lines = bans * linesPerBan;
-
-            const mrcSpiff = lines * (mrc * 3);
-            const flatSpiff = lines * 20;
-
-            const upfront = mrcSpiff + flatSpiff;
-            const residual = lines * (mrc * 0.03 * 23);
             
+            const upfront = (lines * (mrc * dealerMult)) + (lines * 20);
+            const residual = lines * (mrc * 0.03 * 23);
             const total = upfront + residual;
 
-            return { bans, lines, upfront, residual, total };
+            return { bans, lines, upfront, residual, total, dealerMultPercentage: Math.round(dealerMult * 100) };
         }
 
         function updateUI() {
             const current = getCoreData();
-
             els.totalCompensation.textContent = formatCurrency(current.total);
             els.numBans.textContent = Math.round(current.bans).toLocaleString();
             els.numLines.textContent = Math.round(current.lines).toLocaleString();
             els.activationComp.textContent = formatCurrency(current.upfront);
             els.residualAmount.textContent = formatCurrency(current.residual);
+            els.logicMultiplier.textContent = current.dealerMultPercentage;
+            els.upfrontSubMult.textContent = current.dealerMultPercentage;
 
             els.opp10.textContent = formatCurrency(getCoreData(0.10).total);
             els.opp15.textContent = formatCurrency(getCoreData(0.15).total);
             els.opp20.textContent = formatCurrency(getCoreData(0.20).total);
         }
 
-        const inputs = [
-            els.totalMimEligibility, 
-            els.linesPerBan, 
-            els.mimConversionRate, 
-            els.ratePlanValue, 
-            els.isInsider,
-            els.dateFrom
-        ];
+        [els.totalMimEligibility, els.linesPerBan, els.mimConversionRate, els.ratePlanValue, els.dealerCompensationMultiplier, els.isInsider]
+            .forEach(input => input.addEventListener('input', updateUI));
 
-        inputs.forEach(input => input.addEventListener('input', updateUI));
-
+        window.addEventListener('resize', updateUI);
         updateUI();
     </script>
 </body>
