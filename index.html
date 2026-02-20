@@ -231,7 +231,7 @@
                         </div>
                         <div class="space-y-1">
                             <label class="text-[9px] uppercase opacity-60 font-bold tracking-wider cursor-help flex items-center gap-1" data-tip="The percentage of eligible customers converted to a plan.">
-                                Conv. % ⓘ
+                                Current Conv. % ⓘ
                             </label>
                             <div class="relative">
                                 <input type="number" id="mimConversionRate" value="4.0" step="0.1" class="w-full p-2 pr-6 rounded-lg input-style font-mono text-xs md:text-sm">
@@ -332,25 +332,25 @@
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
                         <div class="glass p-4 rounded-xl border border-white/5 relative overflow-hidden group bench-card glow-white">
                             <div class="mb-3">
-                                <span class="text-[10px] md:text-[11px] font-black px-2 py-0.5 bg-white/10 rounded-md uppercase tracking-wider">10% Conversion</span>
+                                <span class="text-[10px] md:text-[11px] font-black px-2 py-0.5 bg-white/10 rounded-md uppercase tracking-wider">25% Conversion</span>
                             </div>
-                            <p id="bench10" class="text-xl md:text-2xl font-bold mb-1 font-mono">$0.00</p>
-                            <p class="text-[8px] opacity-40 uppercase tracking-widest">Market Standard</p>
+                            <p id="bench25" class="text-xl md:text-2xl font-bold mb-1 font-mono">$0.00</p>
+                            <p class="text-[8px] opacity-40 uppercase tracking-widest">Base Target</p>
                         </div>
 
                         <div class="glass p-4 rounded-xl border border-pink-500/20 relative overflow-hidden group bench-card glow-pink">
                             <div class="mb-3">
-                                <span class="text-[10px] md:text-[11px] font-black px-2 py-0.5 bg-pink-500/20 text-pink-400 rounded-md uppercase tracking-wider">15% Conversion</span>
+                                <span class="text-[10px] md:text-[11px] font-black px-2 py-0.5 bg-pink-500/20 text-pink-400 rounded-md uppercase tracking-wider">35% Conversion</span>
                             </div>
-                            <p id="bench15" class="text-xl md:text-2xl font-bold mb-1 text-pink-500 font-mono">$0.00</p>
+                            <p id="bench35" class="text-xl md:text-2xl font-bold mb-1 text-pink-500 font-mono">$0.00</p>
                             <p class="text-[8px] opacity-40 uppercase tracking-widest font-medium">High Performer</p>
                         </div>
 
                         <div class="glass p-4 rounded-xl border border-purple-500/20 relative overflow-hidden group bench-card glow-purple">
                             <div class="mb-3">
-                                <span class="text-[10px] md:text-[11px] font-black px-2 py-0.5 bg-purple-500/20 text-purple-400 rounded-md uppercase tracking-wider">20% Conversion</span>
+                                <span class="text-[10px] md:text-[11px] font-black px-2 py-0.5 bg-purple-500/20 text-purple-400 rounded-md uppercase tracking-wider">45% Conversion</span>
                             </div>
-                            <p id="bench20" class="text-xl md:text-2xl font-bold mb-1 text-purple-500 font-mono">$0.00</p>
+                            <p id="bench45" class="text-xl md:text-2xl font-bold mb-1 text-purple-500 font-mono">$0.00</p>
                             <p class="text-[8px] opacity-40 uppercase tracking-widest font-medium">Elite Benchmark</p>
                         </div>
                     </div>
@@ -403,9 +403,9 @@
             valResidual: document.getElementById('valResidual'),
             statBans: document.getElementById('statBans'),
             statLines: document.getElementById('statLines'),
-            bench10: document.getElementById('bench10'),
-            bench15: document.getElementById('bench15'),
-            bench20: document.getElementById('bench20'),
+            bench25: document.getElementById('bench25'),
+            bench35: document.getElementById('bench35'),
+            bench45: document.getElementById('bench45'),
             insiderAlert: document.getElementById('insiderAlert'),
             compPercentTags: document.querySelectorAll('.comp-percent'),
             tooltip: document.getElementById('tooltip')
@@ -501,9 +501,10 @@
             displays.statBans.textContent = formatWholeNumber(current.bans);
             displays.statLines.textContent = formatWholeNumber(current.lines);
             
-            displays.bench10.textContent = formatUSD(calculateComp(0.10).total);
-            displays.bench15.textContent = formatUSD(calculateComp(0.15).total);
-            displays.bench20.textContent = formatUSD(calculateComp(0.20).total);
+            // Updated math as per request: 25%, 35%, 45%
+            displays.bench25.textContent = formatUSD(calculateComp(0.25).total);
+            displays.bench35.textContent = formatUSD(calculateComp(0.35).total);
+            displays.bench45.textContent = formatUSD(calculateComp(0.45).total);
 
             if (chart) {
                 chart.data.datasets[0].data = [current.upfront, current.residual];
